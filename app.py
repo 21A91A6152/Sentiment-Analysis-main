@@ -9,6 +9,13 @@ from nltk.corpus import stopwords
 import sklearn
 import os
 
+ 
+try:
+    stopwords.words('english')
+except LookupError:
+    nltk.download('stopwords')
+
+ 
 stopwords_set = set(stopwords.words('english'))
 emoticon_pattern = re.compile('(?::|;|=)(?:-)?(?:\)|\(|D|P)')
 
