@@ -41,7 +41,7 @@ def preprocessing(text):
     return " ".join(text)
 
 app = Flask(__name__)
-
+application =app
 
 @app.route('/', methods = ['GET', 'POST'])
 def home():
