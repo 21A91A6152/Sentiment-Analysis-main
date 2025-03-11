@@ -92,6 +92,18 @@ def analyze_sentiment():
         return render_template('index.html', sentiment=sentiment)
     return render_template('index.html')
 
+@app.route('/analysis', methods=['GET', 'POST'])
+def analyze_sentiment():
+    data = request.get_json()
+    comment = data.get('comment')
+
+    # Process
+    preprocessed_comment = preprocessing(comment)
+    comment_vector = tfidf.transform([preprocessed_comment])
+    sentiment = clf.predict(comment_vector)[0]
+
+    return sentiment
+
 
 if __name__ == '__main__':
     app.run(debug = True)
