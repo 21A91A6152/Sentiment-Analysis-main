@@ -92,17 +92,29 @@ def analyze_sentiment():
         return render_template('index.html', sentiment=sentiment)
     return render_template('index.html')
 
-@app.route('/analysis', methods=['GET', 'POST'])
+
+@app.route('/analysis', methods=['POST'])
 def analyze_sentiment_api():
-    data = request.get_json()
-    comment = data.get('comment')
+    try:
+        data = request.get_json()
+        if not data or 'comment' not in data:
+            return jsonify({'error': 'Comment field is missing'}), 400
 
-    # Process
-    preprocessed_comment = preprocessing(comment)
-    comment_vector = tfidf.transform([preprocessed_comment])
-    sentiment = clf.predict(comment_vector)[0]
+        comment = data.get('comment')
 
-    return sentiment
+        # Process
+        preprocessed_comment = preprocessing(comment)
+        comment_vector = tfidf.transform([preprocessed_comment])
+        sentiment = clf.predict(comment_vector)[0]  # This is likely a numpy.int64
+
+        # Convert sentiment to int and label it
+        sentiment = int(sentiment)  # 👈 convert from numpy.int64 to native Python int
+
+        sentiment_label = "Positive" if sentiment == 1 else "Negative"
+        return jsonify({'sentiment': sentiment_label})
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':
