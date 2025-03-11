@@ -93,7 +93,7 @@ def analyze_sentiment():
     return render_template('index.html')
 
 @app.route('/analysis', methods=['GET', 'POST'])
-def analyze_sentiment():
+def analyze_sentiment_api():
     data = request.get_json()
     comment = data.get('comment')
 
