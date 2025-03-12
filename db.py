@@ -1,7 +1,7 @@
 import pymongo
 from flask import request
 
-client = pymongo.MongoClient('mongodb+srv://21a91a6152:wYJkNh9UnFSeQsWW@cluster0.cpesp.mongodb.net/StylesDatabase?retryWrites=true&w=majority&appName=Cluster0')
+client = pymongo.MongoClient('mongodb+srv://sunilvinnu7:5lgp4YTfnNeDwL11@cluster0.zvj2b.mongodb.net/Sentiment?retryWrites=true&w=majority&appName=Cluster0')
 userdb = client['userdb']
 users = userdb.customers
 
